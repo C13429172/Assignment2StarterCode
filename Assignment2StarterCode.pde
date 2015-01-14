@@ -17,6 +17,7 @@ void setup()
 
 void draw()
 {
+  background(0);
   for(Player player:players)
   {
     player.update();
@@ -68,7 +69,7 @@ void setUpPlayerControllers()
   XML[] children = xml.getChildren("player");
   int gap = width / (children.length + 1);
   
-  for(int i = 0 ; i < children.length ; i ++)  
+  for(int i = 0 ; i < 1 ; i ++)  //i < children.length
   {
     XML playerXML = children[i];
     Player p = new Player(

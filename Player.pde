@@ -46,14 +46,15 @@ class Player
   
   void update()
   {
-    if (checkKey(up))
+    /*if (checkKey(up))
     {
       pos.y -= 1;
     }
     if (checkKey(down))
     {
       pos.y += 1;
-    }
+    }*/
+    
     if (checkKey(left))
     {
       pos.x -= 1;
