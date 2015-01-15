@@ -9,10 +9,14 @@
 ArrayList<Player> players = new ArrayList<Player>();
 boolean[] keys = new boolean[526];
 
+//y corodinates of ground for collision
+  float ground = 300;
+
 void setup()
 {
   size(500, 500);
   setUpPlayerControllers();
+  
 }
 
 void draw()
@@ -51,7 +55,7 @@ char buttonNameToKey(XML xml, String buttonName)
   {
     return RIGHT;
   }
-  if ("UP".equalsIgnoreCase(value))
+  if ("x".equalsIgnoreCase(value))
   {
     return UP;
   }
@@ -81,4 +85,8 @@ void setUpPlayerControllers()
     p.pos.y = 300;
    players.add(p);         
   }
+  
+  /* JUMPING */
+  //p.velocity = new PVector (0, 0);
+  //the speed shite ? jumpspeed 10 and walkspeed 4 ?
 }

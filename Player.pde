@@ -10,10 +10,21 @@ class Player
   char button2;
   int index;
   color colour;
+  
+  /*--variables for jumping--*/
+  //float direction; <- don't think this is necessary 
+  PVector velocity;
+  float jumpSpeed = 10;
+  float walkSpeed = 4;
+  //half a pixel per frame gravity
+  float gravity = .5;
+
+  
     
   Player()
   {
     pos = new PVector(width / 2, height / 2);
+    velocity = new PVector (0, 0);
   }
   
   Player(int index, color colour, char up, char down, char left, char right, char start, char button1, char button2)
@@ -28,6 +39,10 @@ class Player
     this.start = start;
     this.button1 = button1;
     this.button2 = button2;
+    this.gravity = gravity;
+    //this.ground = ground;
+    this.jumpSpeed = jumpSpeed;
+    this.walkSpeed = walkSpeed;
   }
   
   Player(int index, color colour, XML xml)
@@ -70,6 +85,50 @@ class Player
     if (checkKey(button1))
     {
       println("Player " + index + " button 1");
+      //only applies gravity if above ground
+      if(pos.y < ground)
+      {
+        velocity.y += gravity;
+      }
+      else
+      {
+        velocity.y = 0;
+      }
+      //if on ground
+      if(pos.y >= ground)
+      {
+        velocity.y = -jumpSpeed; 
+      }
+      
+      //walk left and right???
+      //velocity.x = walkSpeed * (left + right);
+      
+      //something weh here ble
+     PVector nextPosition = new PVector (pos.x, pos.y);
+     nextPosition.add(velocity);
+     
+     //check collision with edge of screen
+     float offset = 0;
+     if (nextPosition.x > offset && nextPosition.x < (width - offset))
+     {
+       pos.x = nextPosition.x;
+     }
+     if (nextPosition.y > offset && nextPosition.y < (height - offset))
+     {
+       pos.y = nextPosition.y;
+     }
+   
+     //pos.x = nextPosition.x;
+     //pos.y = nextPosition.y;
+     
+      
+      pushMatrix();
+      
+      translate(pos.x, pos.y);
+      //display();
+      
+      
+      popMatrix();
     }
     if (checkKey(button2))
     {
