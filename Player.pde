@@ -18,6 +18,7 @@ class Player
   float walkSpeed = 4;
   //half a pixel per frame gravity
   float gravity = .5;
+  float direction = 1;
 
   
     
@@ -43,6 +44,7 @@ class Player
     //this.ground = ground;
     this.jumpSpeed = jumpSpeed;
     this.walkSpeed = walkSpeed;
+    this.direction = direction;
   }
   
   Player(int index, color colour, XML xml)
@@ -61,29 +63,6 @@ class Player
   
   void update()
   {
-    /*if (checkKey(up))
-    {
-      pos.y -= 1;
-    }
-    if (checkKey(down))
-    {
-      pos.y += 1;
-    }*/
-    
-    if (checkKey(left))
-    {
-      pos.x -= 1;
-    }    
-    if (checkKey(right))
-    {
-      pos.x += 1;
-    }
-    if (checkKey(start))
-    {
-      println("Player " + index + " start");
-    }
-    if (checkKey(button1))
-    {
       println("Player " + index + " button 1");
       //only applies gravity if above ground
       if(pos.y < ground)
@@ -95,7 +74,7 @@ class Player
         velocity.y = 0;
       }
       //if on ground
-      if(pos.y >= ground)
+      if(pos.y >= ground && (jump != false))
       {
         velocity.y = -jumpSpeed; 
       }
@@ -108,7 +87,7 @@ class Player
      nextPosition.add(velocity);
      
      //check collision with edge of screen
-     float offset = 0;
+     float offset = 10;
      if (nextPosition.x > offset && nextPosition.x < (width - offset))
      {
        pos.x = nextPosition.x;
@@ -129,6 +108,48 @@ class Player
       
       
       popMatrix();
+      /*if(millis() - currentTime >= cooldown) 
+      {
+        keys[keyCode] = false;
+        currentTime = millis();
+      }
+      /*while(pos.y == ground)
+      {
+        keys[keyCode] = false;
+        keys[keyCode] = true;
+      }*/
+    /*if (checkKey(up))
+    {
+      pos.y -= 1;
+    }
+    if (checkKey(down))
+    {
+      pos.y += 1;
+    }*/
+    
+    if (checkKey(left))
+    {
+      pos.x -= 1;
+      //keys[keyCode] = false;
+    }    
+    if (checkKey(right))
+    {
+      pos.x += 1;
+      //keys[keyCode] = false;
+    }
+    if (checkKey(start))
+    {
+      println("Player " + index + " start");
+    }
+    if (checkKey(button1))
+    {
+      jump = false;
+      if(millis() - currentTime >= cooldown) 
+      {
+        jump = true;
+        currentTime = millis();
+      }
+      
     }
     if (checkKey(button2))
     {

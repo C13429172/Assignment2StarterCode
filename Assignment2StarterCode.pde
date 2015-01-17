@@ -8,9 +8,12 @@
 
 ArrayList<Player> players = new ArrayList<Player>();
 boolean[] keys = new boolean[526];
+boolean jump = false;
 
 //y corodinates of ground for collision
   float ground = 300;
+  float cooldown = 800; 
+  float currentTime = millis();
 
 void setup()
 {
@@ -27,6 +30,8 @@ void draw()
     player.update();
     player.display();
   }
+  fill(255);
+  line(0,300,200,300);
 }
 
 void keyPressed()
@@ -55,7 +60,7 @@ char buttonNameToKey(XML xml, String buttonName)
   {
     return RIGHT;
   }
-  if ("x".equalsIgnoreCase(value))
+  if ("UP".equalsIgnoreCase(value))
   {
     return UP;
   }
@@ -87,6 +92,6 @@ void setUpPlayerControllers()
   }
   
   /* JUMPING */
-  //p.velocity = new PVector (0, 0);
+  //players.velocity = new PVector (0, 0);
   //the speed shite ? jumpspeed 10 and walkspeed 4 ?
 }
