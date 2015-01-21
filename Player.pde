@@ -1,3 +1,4 @@
+
 class Player
 {
   PVector pos;
@@ -73,6 +74,7 @@ class Player
       {
         velocity.y = 0;
       }
+      
       //if on ground
       if(pos.y >= ground && (jump != false))
       {
@@ -160,7 +162,7 @@ class Player
   void display()
   {    
     stroke(colour);
-    fill(colour);    
+    fill(0);    
     rect(pos.x, pos.y, 20, 20);
   }  
 }

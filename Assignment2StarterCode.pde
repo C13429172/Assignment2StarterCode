@@ -7,8 +7,10 @@
 */
 
 ArrayList<Player> players = new ArrayList<Player>();
+ArrayList<Platform> platforms = new ArrayList<Platform>();
 boolean[] keys = new boolean[526];
 boolean jump = false;
+Platform pl;
 
 //y corodinates of ground for collision
   float ground = 300;
@@ -30,8 +32,14 @@ void draw()
     player.update();
     player.display();
   }
-  fill(255);
-  line(0,300,200,300);
+  
+  //fill(255);
+  //line(20,320,70,320);
+  for(Platform platform:platforms)
+  {
+    pl.display();
+    pl.update();
+  }
 }
 
 void keyPressed()
@@ -81,17 +89,19 @@ void setUpPlayerControllers()
   for(int i = 0 ; i < 1 ; i ++)  //i < children.length
   {
     XML playerXML = children[i];
-    Player p = new Player(
-            i
-            , color(random(0, 255), random(0, 255), random(0, 255))
-            , playerXML);
+    Player p = new Player(i, color(random(0, 255), random(0, 255), random(0, 255)), playerXML);
     int x = (i + 1) * gap;
     p.pos.x = x;
     p.pos.y = 300;
    players.add(p);         
   }
-  
-  /* JUMPING */
-  //players.velocity = new PVector (0, 0);
-  //the speed shite ? jumpspeed 10 and walkspeed 4 ?
+ //for(int j = 0 ; j < 5 ; j++)
+  //{
+     pl = new Platform();
+     pl.pLength = random(40,300);
+     pl.pos.y = 320;
+     
+     platforms.add(new Platform(200,320));
+  //}
+
 }
