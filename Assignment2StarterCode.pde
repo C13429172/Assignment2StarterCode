@@ -22,6 +22,8 @@ void setup()
   size(500, 500);
   setUpPlayerControllers();
   
+  createPlatform();
+  
 }
 
 void draw()
@@ -33,13 +35,13 @@ void draw()
     player.display();
   }
   
-  //fill(255);
-  //line(20,320,70,320);
+  //createPlatform();
   for(Platform platform:platforms)
   {
-    pl.display();
-    pl.update();
-  }
+    platform.display();
+    platform.update();
+   }
+
 }
 
 void keyPressed()
@@ -86,7 +88,7 @@ void setUpPlayerControllers()
   XML[] children = xml.getChildren("player");
   int gap = width / (children.length + 1);
   
-  for(int i = 0 ; i < 1 ; i ++)  //i < children.length
+  for(int i = 0 ; i < 1; i ++)  //i < children.length
   {
     XML playerXML = children[i];
     Player p = new Player(i, color(random(0, 255), random(0, 255), random(0, 255)), playerXML);
@@ -95,13 +97,44 @@ void setUpPlayerControllers()
     p.pos.y = 300;
    players.add(p);         
   }
- //for(int j = 0 ; j < 5 ; j++)
-  //{
-     pl = new Platform();
+ /*
+  for(int j = 0 ; j < 5 ; j++)
+  {
+     pl = new Platform(200,320);
      pl.pLength = random(40,300);
      pl.pos.y = 320;
+     //pl.pos.x = 200;
      
-     platforms.add(new Platform(200,320));
+    //platforms.add(new Platform(200,320)); //pl.pos.x
+    platforms.add();
+   //platforms.add(new Platform(300, 325));
+   // platforms.add();
+     
+  }
+*/
+}
+
+void createPlatform()
+{
+   
+  //for(int j = 0 ; j < 5 ; j++)
+  //{
+//     pl = new Platform();
+//     pl.pLength = random(40,300);
+     //pl.pos.y = 320;
+     //pl.pos.x = 200;
+     //float gap = 10;
+     //set pLength here and pass it into yoke
+     //float pLength = random(40,300);
+    //platforms.add(new Platform((width/2), 320));//, pLength)); //pl.pos.x
+    platforms.add(new Platform((width/2), 320));//, pLength));
+    //platforms.add(new Platform(0, 320));//, pLength));
+    //platforms.add(new Platform(0, 320));//, pLength));
+    //platforms.add();
+   //platforms.add(new Platform(300, 325));
+   // platforms.add();
+     
   //}
 
+  
 }
