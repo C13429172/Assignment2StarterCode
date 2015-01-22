@@ -21,7 +21,7 @@ class Platform
     pos.y = y;
     
     //this.pLength = l;
-    //float pLength = random(50,70);
+    float pLength = random(30,60);
     //this.colour = colour;
   }
   
