@@ -18,12 +18,12 @@ Platform pl;
   float currentTime = millis();
   
 //global variables for wave
-int xspacing = 4;   // How far apart should each horizontal location be spaced
+int xspacing = 1;   // How far apart should each horizontal location be spaced
 int w;              // Width of entire wave
 
 float theta = 0.0;  // Start angle at 0
-float amplitude = 75.0;  // Height of wave
-float period = 500.0;  // How many pixels before the wave repeats
+float amplitude = 200.0;  // Height of wave
+float period = 200.0;  // How many pixels before the wave repeats
 float dx;  // Value for incrementing X, a function of period and xspacing
 float[] yvalues;  // Using an array to store height values for the wave
 
@@ -50,15 +50,21 @@ void draw()
     player.display();
   }
   
-  //createPlatform();
-  for(Platform platform:platforms)
+  
+  for(int i = 0; i < platforms.size(); i++)
   {
-    platform.display();
-    platform.update();
-   }
+    platforms.get(i).display();
+    platforms.get(i).update();
+    
+    if(!platforms.get(i).alive)
+    {
+      platforms.remove(i);
+    }
+  }
 
   calcWave();
   renderWave();
+  createPlatform();
 }
 
 void keyPressed()
@@ -144,9 +150,9 @@ void createPlatform()
      //set pLength here and pass it into yoke
      //float pLength = random(40,300);
     //platforms.add(new Platform((width/2), 320));//, pLength)); //pl.pos.x
-    if(frameCount % 50==0)
+    if(frameCount % 180==0)
     {
-      platforms.add(new Platform(0,320));//, pLength));
+      platforms.add(new Platform(width,320));//, pLength));
     }
     //platforms.add(new Platform(0, 320));//, pLength));
     //platforms.add(new Platform(0, 320));//, pLength));

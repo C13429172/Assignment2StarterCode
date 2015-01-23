@@ -4,6 +4,7 @@ class Platform
   color colour;
   float pLength = random(50,70);
   float nextX;
+  boolean alive;
   
    Platform()
   {
@@ -19,6 +20,7 @@ class Platform
     pos = new PVector();
     pos.x = x;
     pos.y = y;
+    alive = true;
     
     //this.pLength = l;
     float pLength = random(30,60);
@@ -33,7 +35,7 @@ class Platform
     }
     else
     {
-      pos.x = width;
+      alive = false;
     }
     //pLength--;
     

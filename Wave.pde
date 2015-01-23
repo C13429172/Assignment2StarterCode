@@ -1,6 +1,7 @@
-void calcWave() {
+void calcWave() 
+{
   // Increment theta (try different values for 'angular velocity' here
-  theta += 0.02;
+  theta += 0.04;
 
   // For every x value, calculate a y value with sine function
   float x = theta;
@@ -10,11 +11,17 @@ void calcWave() {
   }
 }
 
-void renderWave() {
+void renderWave() 
+{
   noStroke();
-  fill(255);
+  fill(0,150,255);
   // A simple way to draw the wave with an ellipse at each location
   for (int x = 0; x < yvalues.length; x++) {
     ellipse(x*xspacing, height+yvalues[x], 8, 8);
   }
+}
+
+void updateWave()
+{
+  
 }

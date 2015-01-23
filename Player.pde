@@ -83,11 +83,11 @@ class Player
       
       //walk left and right???
       //velocity.x = walkSpeed * (left + right);
-      
-      //something weh here ble
+     
+     //something weh here ble
      PVector nextPosition = new PVector (pos.x, pos.y);
      nextPosition.add(velocity);
-     
+     /*
      //check collision with edge of screen
      float offset = 10;
      if (nextPosition.x > offset && nextPosition.x < (width - offset))
@@ -97,10 +97,10 @@ class Player
      if (nextPosition.y > offset && nextPosition.y < (height - offset))
      {
        pos.y = nextPosition.y;
-     }
+     }*/
    
-     //pos.x = nextPosition.x;
-     //pos.y = nextPosition.y;
+     pos.x = nextPosition.x;
+     pos.y = nextPosition.y;
      
       
       pushMatrix();
@@ -131,12 +131,12 @@ class Player
     
     if (checkKey(left))
     {
-      pos.x -= 1;
+      pos.x -= 3;
       //keys[keyCode] = false;
     }    
     if (checkKey(right))
     {
-      pos.x += 1;
+      pos.x += 3;
       //keys[keyCode] = false;
     }
     if (checkKey(start))
