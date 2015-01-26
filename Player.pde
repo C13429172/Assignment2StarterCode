@@ -64,7 +64,7 @@ class Player
   
   void update()
   {
-      println("Player " + index + " button 1");
+      //println("Player " + index + " button 1");
       //only applies gravity if above ground
       if(pos.y < ground)
       {
