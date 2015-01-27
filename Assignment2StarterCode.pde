@@ -27,10 +27,24 @@ float period = 200.0;  // How many pixels before the wave repeats
 float dx;  // Value for incrementing X, a function of period and xspacing
 float[] yvalues;  // Using an array to store height values for the wave
 
+//sprites
+PImage logo;
+//logo = loadImage("startImage.png");
+
+int g = 0;
+int h = 0;
+
+
+boolean startScreen= true;
+
 void setup()
 {
   size(500, 500);
   setUpPlayerControllers();
+  
+  logo = loadImage("startImage.png");
+  logo.resize(500, 300);
+
   
   createPlatform();
   
@@ -45,35 +59,74 @@ void setup()
   platforms.add(new Platform(350,320,100));
   platforms.add(new Platform(150,320,100));
   
+  //startScreen = true;
+  
 }
 
 void draw()
 {
-  background(0);
-  for(Player player:players)
+  if(startScreen)
   {
-    player.update();
-    player.display();
-  }
-  
-  
-  for(int i = 0; i < platforms.size(); i++)
-  {
-    platforms.get(i).display();
-    platforms.get(i).update();
-    
-    if(!platforms.get(i).alive)
+    background(0);
+    image(logo,50,100);
+    if(checkKey(players.get(0).start))
     {
-      platforms.remove(i);
+       startScreen = false;
+    }
+    
+  }
+  else if (startScreen == false)
+  {
+    background(0);
+    for(Player player:players)
+    {
+      player.update();
+      player.display();
+    }
+  
+  
+    for(int i = 0; i < platforms.size(); i++)
+    {
+      platforms.get(i).display();
+      platforms.get(i).update();
+    
+      if(!platforms.get(i).alive)
+      {
+        platforms.remove(i);
+      }
+    }
+
+    calcWave();
+    renderWave();
+    //updateWave();
+    createPlatform();
+    
+    Player p = players.get(0);
+    for(int i=0; i<platforms.size();i++)
+    {
+      Platform plat = platforms.get(i);
+      if(plat.collisionCheck(p))
+      {
+        players.get(0).pos.x--;
+        players.get(0).pos.y = plat.pos.y - players.get(0).len +1;
+        println("g" + g);
+        g++;
+      }
+      else
+      {
+          players.get(0).pos.y++;
+        //players.get(0).velocity.y = -players.get(0).jumpSpeed;
+        println("h" + h);
+        h++;
+      }
     }
   }
-
-  calcWave();
-  renderWave();
-  //updateWave();
-  createPlatform();
 }
 
+
+  
+
+  
 void keyPressed()
 {
   keys[keyCode] = true;

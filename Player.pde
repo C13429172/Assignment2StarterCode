@@ -10,6 +10,7 @@ class Player
   char button1;
   char button2;
   int index;
+  int len=20;
   color colour;
   
   /*--variables for jumping--*/
@@ -143,6 +144,7 @@ class Player
     if (checkKey(start))
     {
       println("Player " + index + " start");
+      startScreen = false;
     }
     if (checkKey(button1))
     {
@@ -164,6 +166,6 @@ class Player
   {    
     stroke(colour);
     fill(0);    
-    rect(pos.x, pos.y, 20, 20);
+    rect(pos.x, pos.y, len, len);
   }  
 }
