@@ -19,6 +19,7 @@ class Player
   float walkSpeed = 4;
   //half a pixel per frame gravity
   float gravity = .5;
+  //PVector gravity;
   float direction = 1;
 
   
@@ -26,7 +27,8 @@ class Player
   Player()
   {
     pos = new PVector(width / 2, height / 2);
-    velocity = new PVector (0, 0);
+    velocity = new PVector (0, 0);                                                                      
+    //gravity = new PVector (0, .5);
   }
   
   Player(int index, color colour, char up, char down, char left, char right, char start, char button1, char button2)
@@ -41,11 +43,6 @@ class Player
     this.start = start;
     this.button1 = button1;
     this.button2 = button2;
-    this.gravity = gravity;
-    //this.ground = ground;
-    this.jumpSpeed = jumpSpeed;
-    this.walkSpeed = walkSpeed;
-    this.direction = direction;
   }
   
   Player(int index, color colour, XML xml)
@@ -68,7 +65,9 @@ class Player
       //only applies gravity if above ground
       if(pos.y < ground)
       {
+        //pos.add(gravity);
         velocity.y += gravity;
+        
       }
       else
       {
@@ -76,9 +75,11 @@ class Player
       }
       
       //if on ground
-      if(pos.y >= ground && (jump != false))
+      if(jump && pos.y >=ground)
       {
-        velocity.y = -jumpSpeed; 
+        //gravity.y = -.5; 
+        //pos.sub(gravity);
+        velocity.y = -jumpSpeed;
       }
       
       //walk left and right???
@@ -86,7 +87,7 @@ class Player
      
      //something weh here ble
      PVector nextPosition = new PVector (pos.x, pos.y);
-     nextPosition.add(velocity);
+     nextPosition.add(velocity); //velocity
      /*
      //check collision with edge of screen
      float offset = 10;

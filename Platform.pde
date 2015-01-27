@@ -15,27 +15,40 @@ class Platform
      pos.y = 320;
   }
   
- Platform(float x, float y)//, float l)
+ Platform(float x, float y, float pLength)//, float l)
   {
     pos = new PVector();
     pos.x = x;
     pos.y = y;
     alive = true;
+    this.pLength = pLength;
     
     //this.pLength = l;
-    float pLength = random(30,60);
+    //float pLength = random(30,60);
     //this.colour = colour;
   }
   
   void update()
   {
-    if(pos.x > 0)
+    if(pos.x + pLength > 0)
     {
       pos.x--;
     }
     else
     {
       alive = false;
+    }
+    
+   if(players.get(0).pos.x < pos.x +pLength && players.get(0).pos.x - 20 > pos.x && players.get(0).pos.y == 300)// && players.get(0).pos.y + 20 ==340)
+    {
+      println("line collision");
+      players.get(0).pos.x--;
+    }
+    else
+    {
+      //players.get(0).velocity.y += players.get(0).gravity;
+      //println("fall");
+      //players.get(0).pos.y++;
     }
     //pLength--;
     

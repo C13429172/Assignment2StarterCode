@@ -26,10 +26,10 @@ void renderWave()
 void updateWave(float x, float y)
 {
   
-  if(players.get(0).pos.x - 20 < x + 16 && players.get(0).pos.x + 20 > x && players.get(0).pos.y - 20 < y + 16 && players.get(0).pos.y + 20 > y)
+  if(players.get(0).pos.x - 20 < x  && players.get(0).pos.x + 20 > x && players.get(0).pos.y - 20 < y  && players.get(0).pos.y + 20 > y)
  {
-  println("collision");
-  rect(x, y, 20, 20);
+  //println("collision");
+  rect(x, y, 10, 10);
  } 
   
   /*

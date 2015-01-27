@@ -39,6 +39,12 @@ void setup()
   dx = (TWO_PI / period) * xspacing;
   yvalues = new float[w/xspacing];
   
+  //setup first few platforms for players to start on
+  //platforms.add(new Platform(80,320,60));
+  //platforms.add(new Platform(100,320,50));
+  platforms.add(new Platform(350,320,100));
+  platforms.add(new Platform(150,320,100));
+  
 }
 
 void draw()
@@ -149,11 +155,17 @@ void createPlatform()
      //pl.pos.x = 200;
      //float gap = 10;
      //set pLength here and pass it into yoke
-     //float pLength = random(40,300);
+     float pLength = random(80,150);
     //platforms.add(new Platform((width/2), 320));//, pLength)); //pl.pos.x
+    //float time = random(120,180);
     if(frameCount % 180==0)
     {
-      platforms.add(new Platform(width,320));//, pLength));
+      platforms.add(new Platform(width,320,pLength));//, pLength));
+    }
+    float randLen = random(50,100);
+     if(frameCount % 540==0)
+    {
+      platforms.add(new Platform(width+randLen,270,pLength));//, pLength));
     }
     //platforms.add(new Platform(0, 320));//, pLength));
     //platforms.add(new Platform(0, 320));//, pLength));
