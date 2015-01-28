@@ -18,11 +18,11 @@ Platform pl;
   float currentTime = millis();
   
 //global variables for wave
-int xspacing = 1;   // How far apart should each horizontal location be spaced
-int w;              // Width of entire wave
+int xspacing = 1;   // spacing between each circle
+int w;              // width of wave
 
-float theta = 0.0;  // Start angle at 0
-float amplitude = 190.0;  // Height of wave
+float theta = 0.0;  // start angle at 0
+float amplitude = 200.0;  // Height of wave
 float period = 200.0;  // How many pixels before the wave repeats
 float dx;  // Value for incrementing X, a function of period and xspacing
 float[] yvalues;  // Using an array to store height values for the wave
@@ -31,11 +31,10 @@ float[] yvalues;  // Using an array to store height values for the wave
 PImage logo;
 PImage saw;
 float counter=0.0;
-//logo = loadImage("startImage.png");
 
 int g = 0;
 int h = 0;
-int PUlen = 20;
+int PUlen = 25;
 
 //audio things
 import ddf.minim.*;
@@ -44,12 +43,15 @@ Minim minim;
 boolean music = false;
 
 boolean startScreen= true;
+boolean endScreen=false;
+
 
 powerUps power = new powerUps();
 //speeds for each object
 float platSpeed;
 float playerSpeed;
 float powerSpeed = 2;
+int score = 0;
 
 void setup()
 {
@@ -60,7 +62,7 @@ void setup()
   logo = loadImage("startImage.png");
   logo.resize(400, 250);
   
-  
+  //loading and resizing saw image
   saw = loadImage("saw.png");
   saw.resize(100,100);
 
@@ -74,8 +76,6 @@ void setup()
   yvalues = new float[w/xspacing];
   
   //setup first few platforms for players to start on
-  //platforms.add(new Platform(80,320,60));
-  //platforms.add(new Platform(100,320,50));
   platforms.add(new Platform(350,320,100));
   platforms.add(new Platform(200,320,100));
   
@@ -83,12 +83,11 @@ void setup()
   minim = new Minim(this);
   track = minim.loadFile("wipeOut.mp3");
   
-  //startScreen = true;
-  
 }
 
 void draw()
 {
+  background(0);
   //loops track 
   if(music == false || track.isPlaying() == false)
   {
@@ -99,7 +98,7 @@ void draw()
   
   if(startScreen)
   {
-    background(0);
+   
     image(logo,75,100);
     text("Press START or Q to play ", 150, 250);
     if(checkKey(players.get(0).start))
@@ -108,20 +107,27 @@ void draw()
     }
     
   }
-  else if (startScreen == false)
+  else if(endScreen)
   {
-    background(0);
-    
-   pushMatrix();
+    textSize(64);
+    text("GAME OVER", 100,height/2);
+    textSize(32);
+    text("Your score: "+ score, 100, height/2 + 50);
+  }
+  else 
+  {
+     pushMatrix();
     counter++;
-    //translate(width/2-saw.width/2, height/2-saw.height/2);//(-80-saw.width/2, 250-saw.height/2);
     translate(0, 270);
     rotate(counter*TWO_PI/360);
     translate(-saw.width/2, -saw.height/2);
     image(saw, 0, 0);
     popMatrix();
     
-    
+    if(frameCount % 10 ==0)
+    {
+      score++;
+    }
     
     for(Player player:players)
     {
@@ -142,8 +148,7 @@ void draw()
     }
 
     calcWave();
-    renderWave();
-    //updateWave();
+    renderWave();// also calls update wave
     createPlatform();
     
     Player p = players.get(0);
@@ -154,29 +159,38 @@ void draw()
         if(plat.collisionCheck(p))
         {
           players.get(0).pos.x--;
-          //players.get(0).pos.y += players.get(0).velocity.y;
           players.get(0).pos.y = plat.pos.y - players.get(0).len;
           players.get(0).velocity.y =0;
-          println("g" + g);
-          g++;
         }
         else
         {
            players.get(0).pos.y++;
-          //players.get(0).velocity.y = -players.get(0).jumpSpeed;
-          println("h" + h);
-          h++;
         }
       }
     }
+    
     power.update();
+    if(power.colCheckPower(p))
+    {
+      score += 10;
+    }
+    fill(255);
+    text("Score: " +score, 250, 20);
+    
+    //if player falls off screen, game over
+    if(players.get(0).pos.y > 400)
+    {
+      endScreen = true;
+    }
+    
+    if(players.get(0).pos.x < 25)
+    {
+      endScreen = true;
+    }
   }
+  
 }
 
-
-  
-
-  
 void keyPressed()
 {
   keys[keyCode] = true;
@@ -211,7 +225,6 @@ char buttonNameToKey(XML xml, String buttonName)
   {
     return DOWN;
   }
-  //.. Others to follow
   return value.charAt(0);  
 }
 
@@ -234,10 +247,9 @@ void setUpPlayerControllers()
 
 void createPlatform()
 {
-     //set pLength here and pass it into yoke
+     //set pLength here and pass it into platform class
      float pLength = random(80,150);
-    //platforms.add(new Platform((width/2), 320));//, pLength)); //pl.pos.x
-    //float time = random(120,180);
+     
     if(frameCount % 180==0)
     {
       platforms.add(new Platform(width,320,pLength));//, pLength));

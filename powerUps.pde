@@ -18,5 +18,14 @@ class powerUps
       powerSpeed += 0.2;
     }
   }
-    
+  
+  boolean colCheckPower(Player p)
+  {
+       if (p.pos.x < posX + PUlen && p.pos.x + p.len > posX && p.pos.y < posY + PUlen && p.pos.y - p.len < posY)
+       {
+          return true;
+       }
+      return false; 
+     
+   }
 }

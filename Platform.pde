@@ -8,8 +8,6 @@ class Platform
   
    Platform()
   {
-     //pos.x = x;
-     //pos.y = y;
      pos = new PVector(); // width/2 and height/2
      pos.x = width;
      pos.y = 320;
@@ -22,10 +20,6 @@ class Platform
     pos.y = y;
     alive = true;
     this.pLength = pLength;
-    
-    //this.pLength = l;
-    //float pLength = random(30,60);
-    //this.colour = colour;
   }
   
 
@@ -41,14 +35,6 @@ class Platform
       alive = false;
     }
     
-   //if(players.get(0).pos.x > pos.x +pLength && players.get(0).pos.x - 20 < pos.x && players.get(0).pos.y + 20== 300)// && players.get(0).pos.y + 20 ==340)
-   
-    
-  
-    //pLength--;
-    
-    //nextX = pos.x + pLength + 20;
-    
   }
   
   void display()
@@ -62,8 +48,6 @@ class Platform
   
   boolean collisionCheck(Player p)
   {
-     for(Player player:players)
-     {
         if(p.pos.x <= pos.x +pLength && p.pos.x + 20 >= pos.x && p.pos.y <= pos.y && p.pos.y+p.len >= pos.y)
        //if(players.get(0).pos.x > pos.x && players.get(0).pos.x < pos.x + pLength && players.get(0).pos.x + 20 > pos.x && players.get(0).pos.x + 20 < pos.x + pLength && players.get(0).pos.y + 20 == 300) 
         {
@@ -71,7 +55,6 @@ class Platform
       
             return true;
         }
-     }
         return false;
     
     /*if (players.get(0).pos.x > pos.x +pLength && players.get(0).pos.x - 20 < pos.x )//&& players.get(0).pos.y == 300)
