@@ -35,9 +35,21 @@ float counter=0.0;
 
 int g = 0;
 int h = 0;
+int PUlen = 20;
 
+//audio things
+import ddf.minim.*;
+AudioPlayer track;
+Minim minim;
+boolean music = false;
 
 boolean startScreen= true;
+
+powerUps power = new powerUps();
+//speeds for each object
+float platSpeed;
+float playerSpeed;
+float powerSpeed = 2;
 
 void setup()
 {
@@ -50,7 +62,7 @@ void setup()
   
   
   saw = loadImage("saw.png");
-  saw.resize(30,30);
+  saw.resize(100,100);
 
   
   createPlatform();
@@ -65,7 +77,11 @@ void setup()
   //platforms.add(new Platform(80,320,60));
   //platforms.add(new Platform(100,320,50));
   platforms.add(new Platform(350,320,100));
-  platforms.add(new Platform(150,320,100));
+  platforms.add(new Platform(200,320,100));
+  
+  //reading in the mp3 file
+  minim = new Minim(this);
+  track = minim.loadFile("wipeOut.mp3");
   
   //startScreen = true;
   
@@ -73,6 +89,14 @@ void setup()
 
 void draw()
 {
+  //loops track 
+  if(music == false || track.isPlaying() == false)
+  {
+    track.rewind();
+    track.play();
+    music=true;
+  }
+  
   if(startScreen)
   {
     background(0);
@@ -88,11 +112,16 @@ void draw()
   {
     background(0);
     
-   /* pushMatrix();
+   pushMatrix();
     counter++;
+    //translate(width/2-saw.width/2, height/2-saw.height/2);//(-80-saw.width/2, 250-saw.height/2);
+    translate(0, 270);
     rotate(counter*TWO_PI/360);
-    image(saw, 0, 320);
-    popMatrix();*/
+    translate(-saw.width/2, -saw.height/2);
+    image(saw, 0, 0);
+    popMatrix();
+    
+    
     
     for(Player player:players)
     {
@@ -121,23 +150,26 @@ void draw()
     for(int i=0; i<platforms.size();i++)
     {
       Platform plat = platforms.get(i);
-      if(plat.collisionCheck(p))
       {
-        players.get(0).pos.x--;
-        //players.get(0).pos.y += players.get(0).velocity.y;
-        players.get(0).pos.y = plat.pos.y - players.get(0).len;
-        players.get(0).velocity.y =0;
-        println("g" + g);
-        g++;
-      }
-      else
-      {
-         players.get(0).pos.y++;
-        //players.get(0).velocity.y = -players.get(0).jumpSpeed;
-        println("h" + h);
-        h++;
+        if(plat.collisionCheck(p))
+        {
+          players.get(0).pos.x--;
+          //players.get(0).pos.y += players.get(0).velocity.y;
+          players.get(0).pos.y = plat.pos.y - players.get(0).len;
+          players.get(0).velocity.y =0;
+          println("g" + g);
+          g++;
+        }
+        else
+        {
+           players.get(0).pos.y++;
+          //players.get(0).velocity.y = -players.get(0).jumpSpeed;
+          println("h" + h);
+          h++;
+        }
       }
     }
+    power.update();
   }
 }
 
@@ -189,12 +221,12 @@ void setUpPlayerControllers()
   XML[] children = xml.getChildren("player");
   int gap = width / (children.length + 1);
   
-  for(int i = 0 ; i < children.length; i ++)  //i < children.length
+  for(int i = 0 ; i < 1; i ++)  //i < children.length
   {
     XML playerXML = children[i];
     Player p = new Player(i, color(random(0, 255), random(0, 255), random(0, 255)), playerXML);
     int x = (i + 1) * gap;
-    p.pos.x = x;
+    p.pos.x = 250;
     p.pos.y = 300;
      players.add(p); 
   }

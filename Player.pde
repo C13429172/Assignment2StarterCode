@@ -19,7 +19,7 @@ class Player
   float jumpSpeed = 10;
   float walkSpeed = 4;
   //half a pixel per frame gravity
-  float gravity = .5;
+  float gravity = .25;
   //PVector gravity;
   float direction = 1;
 
