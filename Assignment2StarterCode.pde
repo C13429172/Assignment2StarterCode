@@ -234,10 +234,10 @@ void setUpPlayerControllers()
   XML[] children = xml.getChildren("player");
   int gap = width / (children.length + 1);
   
-  for(int i = 0 ; i < 1; i ++)  //i < children.length
+  for(int i = 0 ; i < 1; i ++) 
   {
     XML playerXML = children[i];
-    Player p = new Player(i, color(random(0, 255), random(0, 255), random(0, 255)), playerXML);
+    Player p = new Player(i, color(0,0,255), playerXML);
     int x = (i + 1) * gap;
     p.pos.x = 250;
     p.pos.y = 300;
