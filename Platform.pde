@@ -62,14 +62,18 @@ class Platform
   
   boolean collisionCheck(Player p)
   {
-    if(p.pos.x <= pos.x +pLength && p.pos.x + 20 >= pos.x && p.pos.y <= pos.y && p.pos.y+p.len >= pos.y)
-   //if(players.get(0).pos.x > pos.x && players.get(0).pos.x < pos.x + pLength && players.get(0).pos.x + 20 > pos.x && players.get(0).pos.x + 20 < pos.x + pLength && players.get(0).pos.y + 20 == 300) 
-    {
-      println("line collision");
+     for(Player player:players)
+     {
+        if(p.pos.x <= pos.x +pLength && p.pos.x + 20 >= pos.x && p.pos.y <= pos.y && p.pos.y+p.len >= pos.y)
+       //if(players.get(0).pos.x > pos.x && players.get(0).pos.x < pos.x + pLength && players.get(0).pos.x + 20 > pos.x && players.get(0).pos.x + 20 < pos.x + pLength && players.get(0).pos.y + 20 == 300) 
+        {
+            println("line collision");
       
-      return true;
-    }
-    return false;
+            return true;
+        }
+     }
+        return false;
+    
     /*if (players.get(0).pos.x > pos.x +pLength && players.get(0).pos.x - 20 < pos.x )//&& players.get(0).pos.y == 300)
    
     {

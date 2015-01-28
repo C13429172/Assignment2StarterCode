@@ -22,13 +22,15 @@ int xspacing = 1;   // How far apart should each horizontal location be spaced
 int w;              // Width of entire wave
 
 float theta = 0.0;  // Start angle at 0
-float amplitude = 200.0;  // Height of wave
+float amplitude = 190.0;  // Height of wave
 float period = 200.0;  // How many pixels before the wave repeats
 float dx;  // Value for incrementing X, a function of period and xspacing
 float[] yvalues;  // Using an array to store height values for the wave
 
 //sprites
 PImage logo;
+PImage saw;
+float counter=0.0;
 //logo = loadImage("startImage.png");
 
 int g = 0;
@@ -42,11 +44,17 @@ void setup()
   size(500, 500);
   setUpPlayerControllers();
   
+  //loading and resizing images
   logo = loadImage("startImage.png");
-  logo.resize(500, 300);
+  logo.resize(400, 250);
+  
+  
+  saw = loadImage("saw.png");
+  saw.resize(30,30);
 
   
   createPlatform();
+  
   
   //variables to create the wave
    w = width+16;
@@ -68,7 +76,8 @@ void draw()
   if(startScreen)
   {
     background(0);
-    image(logo,50,100);
+    image(logo,75,100);
+    text("Press START or Q to play ", 150, 250);
     if(checkKey(players.get(0).start))
     {
        startScreen = false;
@@ -78,6 +87,13 @@ void draw()
   else if (startScreen == false)
   {
     background(0);
+    
+   /* pushMatrix();
+    counter++;
+    rotate(counter*TWO_PI/360);
+    image(saw, 0, 320);
+    popMatrix();*/
+    
     for(Player player:players)
     {
       player.update();
@@ -108,13 +124,15 @@ void draw()
       if(plat.collisionCheck(p))
       {
         players.get(0).pos.x--;
-        players.get(0).pos.y = plat.pos.y - players.get(0).len +1;
+        //players.get(0).pos.y += players.get(0).velocity.y;
+        players.get(0).pos.y = plat.pos.y - players.get(0).len;
+        players.get(0).velocity.y =0;
         println("g" + g);
         g++;
       }
       else
       {
-          players.get(0).pos.y++;
+         players.get(0).pos.y++;
         //players.get(0).velocity.y = -players.get(0).jumpSpeed;
         println("h" + h);
         h++;
@@ -171,42 +189,19 @@ void setUpPlayerControllers()
   XML[] children = xml.getChildren("player");
   int gap = width / (children.length + 1);
   
-  for(int i = 0 ; i < 1; i ++)  //i < children.length
+  for(int i = 0 ; i < children.length; i ++)  //i < children.length
   {
     XML playerXML = children[i];
     Player p = new Player(i, color(random(0, 255), random(0, 255), random(0, 255)), playerXML);
     int x = (i + 1) * gap;
     p.pos.x = x;
     p.pos.y = 300;
-   players.add(p);         
+     players.add(p); 
   }
- /*
-  for(int j = 0 ; j < 5 ; j++)
-  {
-     pl = new Platform(200,320);
-     pl.pLength = random(40,300);
-     pl.pos.y = 320;
-     //pl.pos.x = 200;
-     
-    //platforms.add(new Platform(200,320)); //pl.pos.x
-    platforms.add();
-   //platforms.add(new Platform(300, 325));
-   // platforms.add();
-     
-  }
-*/
 }
 
 void createPlatform()
 {
-   
-  //for(int j = 0 ; j < 5 ; j++)
-  //{
-//     pl = new Platform();
-     //pl.pLength = random(40,300);
-     //pl.pos.y = 320;
-     //pl.pos.x = 200;
-     //float gap = 10;
      //set pLength here and pass it into yoke
      float pLength = random(80,150);
     //platforms.add(new Platform((width/2), 320));//, pLength)); //pl.pos.x
@@ -220,11 +215,6 @@ void createPlatform()
     {
       platforms.add(new Platform(width+randLen,270,pLength));//, pLength));
     }
-    //platforms.add(new Platform(0, 320));//, pLength));
-    //platforms.add(new Platform(0, 320));//, pLength));
-    //platforms.add();
-   //platforms.add(new Platform(300, 325));
-   // platforms.add();
      
   //}
 
